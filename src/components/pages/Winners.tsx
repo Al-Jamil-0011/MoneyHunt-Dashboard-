@@ -33,6 +33,7 @@ import {
   BreadcrumbSeparator,
   WinnerStatusBadge,
   TableEmptyState,
+  ActionButton,
   useToast,
 } from "../ui";
 import { WINNERS, Winner } from "@/lib/data";
@@ -339,7 +340,7 @@ export function Winners() {
               <TableHead>XP Awarded</TableHead>
               <TableHead>Claim Date</TableHead>
               <TableHead>Verification Status</TableHead>
-              <TableHead className="text-right pr-6">Action</TableHead>
+              <TableHead className="text-right pr-6 w-[210px]">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -406,15 +407,20 @@ export function Winners() {
                     <TableCell>
                       <WinnerStatusBadge status={w.status} />
                     </TableCell>
-                    <TableCell className="text-right pr-6">
-                      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-150 inline-block">
-                        <Button
-                          variant={w.status === "Pending" ? "green" : "outline"}
-                          size="sm"
+                    <TableCell className="text-right pr-6 w-[210px]">
+                      <div className="flex items-center justify-end gap-[6px]">
+                        <ActionButton
+                          variant="primary"
                           onClick={() => setSelected(w)}
                         >
-                          {w.status === "Pending" ? "Review Claim" : "Details"}
-                        </Button>
+                          Review Claim
+                        </ActionButton>
+                        <ActionButton
+                          variant="secondary"
+                          onClick={() => setSelected(w)}
+                        >
+                          Details
+                        </ActionButton>
                       </div>
                     </TableCell>
                   </TableRow>

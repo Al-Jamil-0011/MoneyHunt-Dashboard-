@@ -36,6 +36,7 @@ import {
   StatusBadge,
   TableEmptyState,
   FloatingBulkBar,
+  ActionButton,
   useToast,
 } from "../ui";
 import { USERS, User } from "@/lib/data";
@@ -264,7 +265,7 @@ export function Users() {
               <TableHead>Deals Claimed</TableHead>
               <TableHead>Joined Date</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead className="text-right pr-6">Action</TableHead>
+              <TableHead className="text-right pr-6 w-[170px]">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -334,33 +335,28 @@ export function Users() {
                     <TableCell>
                       <StatusBadge status={u.status} />
                     </TableCell>
-                    <TableCell className="text-right pr-6">
-                      <div className="flex items-center justify-end gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
-                        <Button
-                          variant="outline"
-                          size="sm"
+                    <TableCell className="text-right pr-6 w-[170px]">
+                      <div className="flex items-center justify-end gap-[6px]">
+                        <ActionButton
+                          variant="secondary"
                           onClick={() => setSelected(u)}
                         >
                           Profile
-                        </Button>
+                        </ActionButton>
                         {u.status === "Banned" ? (
-                          <Button
-                            variant="outline"
-                            size="sm"
+                          <ActionButton
+                            variant="primary"
                             onClick={() => unbanUser(u.id)}
-                            className="border-green-200 text-green-700 hover:bg-green-50"
                           >
                             Unban
-                          </Button>
+                          </ActionButton>
                         ) : (
-                          <Button
-                            variant="ghost"
-                            size="sm"
+                          <ActionButton
+                            variant="danger"
                             onClick={() => banUser(u.id)}
-                            className="text-red-600 hover:bg-red-50 hover:text-red-700"
                           >
                             Ban
-                          </Button>
+                          </ActionButton>
                         )}
                       </div>
                     </TableCell>

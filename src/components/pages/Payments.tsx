@@ -11,6 +11,7 @@ import {
   StatusBadge,
   EmptyState,
   FloatingBulkBar,
+  ActionButton,
   useToast,
 } from "../ui";
 import {
@@ -298,7 +299,7 @@ export function Payments() {
                 <th className="py-3 px-4">STATUS</th>
                 <th className="py-3 px-4">PAYMENT METHOD</th>
                 <th className="py-3 px-4">DATE</th>
-                <th className="py-3 px-4 text-right">ACTION</th>
+                <th className="py-3 px-4 text-right w-[110px]">ACTION</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-stone-100/80">
@@ -372,14 +373,14 @@ export function Payments() {
                       <td className="py-3 px-4 text-xs font-mono text-stone-500">
                         {t.date}
                       </td>
-                      <td className="py-3 px-4 text-right">
-                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-150 inline-block">
-                          <button
-                            onClick={() => toast(`Receipt opened for ${t.id}`, "info")}
-                            className="text-xs font-bold text-stone-600 hover:text-emerald-700 hover:bg-stone-100 px-2.5 py-1 rounded-lg transition-colors border border-stone-200 cursor-pointer"
+                      <td className="py-3 px-4 text-right w-[110px]">
+                        <div className="flex items-center justify-end">
+                          <ActionButton
+                            variant="secondary"
+                            onClick={() => toast(`Transaction details opened for ${t.id}`, "info")}
                           >
-                            Receipt
-                          </button>
+                            Details
+                          </ActionButton>
                         </div>
                       </td>
                     </tr>

@@ -27,7 +27,7 @@ import {
   RefreshCw,
   Trophy,
 } from "lucide-react";
-import { useToast, Modal, StatusBadge, EmptyState, FloatingBulkBar } from "../ui";
+import { useToast, Modal, StatusBadge, EmptyState, FloatingBulkBar, ActionButton } from "../ui";
 
 // Helper for User Avatar initials
 function HunterAvatar({ name, initials, color }: { name: string; initials: string; color?: string }) {
@@ -900,7 +900,7 @@ export function Sweepstakes() {
                 <th className="py-3 px-4">DRAW DATE</th>
                 <th className="py-3 px-4">STATUS</th>
                 <th className="py-3 px-4">PAYOUT</th>
-                <th className="py-3 px-4 text-right">ACTION</th>
+                <th className="py-3 px-4 text-right w-[110px]">ACTION</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-stone-100 text-stone-700 font-medium">
@@ -1007,9 +1007,10 @@ export function Sweepstakes() {
                       <StatusBadge status={row.status} />
                     </td>
                     <td className="py-3.5 px-4 font-bold text-stone-900">{row.payout}</td>
-                    <td className="py-3.5 px-4 text-right">
-                      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-150 inline-block">
-                        <button
+                    <td className="py-3.5 px-4 text-right w-[110px]">
+                      <div className="flex items-center justify-end">
+                        <ActionButton
+                          variant="secondary"
                           onClick={() =>
                             setSelectedHistoryItem({
                               week: row.week,
@@ -1022,10 +1023,9 @@ export function Sweepstakes() {
                               payout: row.payout,
                             })
                           }
-                          className="bg-white hover:bg-stone-100 text-stone-700 border border-stone-200 text-xs font-bold px-3 py-1 rounded-lg transition-colors shadow-2xs cursor-pointer"
                         >
                           Details
-                        </button>
+                        </ActionButton>
                       </div>
                     </td>
                   </tr>

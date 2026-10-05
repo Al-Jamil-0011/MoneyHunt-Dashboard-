@@ -37,6 +37,7 @@ import {
   EmptyState,
   TableEmptyState,
   FloatingBulkBar,
+  ActionButton,
   useToast,
 } from "../ui";
 import {
@@ -357,7 +358,7 @@ export function HuntManagement() {
                 <TableHead>Prize Bounty</TableHead>
                 <TableHead>Scheduled Time</TableHead>
                 <TableHead>Drop Status</TableHead>
-                <TableHead className="text-right pr-6">Management</TableHead>
+                <TableHead className="text-right pr-6 w-[170px]">Management</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -406,33 +407,29 @@ export function HuntManagement() {
                     <TableCell>
                       <StatusBadge status={h.status} dot={h.status === "Active"} />
                     </TableCell>
-                    <TableCell className="text-right pr-6">
-                      <div className="flex items-center justify-end gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
-                        {h.status === "Active" && (
-                          <Button
-                            variant="destructive"
-                            size="sm"
+                    <TableCell className="text-right pr-6 w-[170px]">
+                      <div className="flex items-center justify-end gap-[6px]">
+                        {h.status === "Active" ? (
+                          <ActionButton
+                            variant="danger"
                             onClick={() => endHunt(h.id)}
                           >
                             End
-                          </Button>
-                        )}
-                        {(h.status === "Scheduled" || h.status === "Draft") && (
-                          <Button
-                            variant="green"
-                            size="sm"
+                          </ActionButton>
+                        ) : (
+                          <ActionButton
+                            variant="primary"
                             onClick={() => activateHunt(h.id)}
                           >
                             Launch
-                          </Button>
+                          </ActionButton>
                         )}
-                        <Button
-                          variant="outline"
-                          size="sm"
+                        <ActionButton
+                          variant="secondary"
                           onClick={() => setShowCreate(true)}
                         >
                           Edit
-                        </Button>
+                        </ActionButton>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -1040,7 +1037,7 @@ export function Deals() {
               <TableHead>Distance</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Expires</TableHead>
-              <TableHead className="text-right pr-6">Action</TableHead>
+              <TableHead className="text-right pr-6 w-[170px]">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -1086,25 +1083,23 @@ export function Deals() {
                     <StatusBadge status={d.status} dot={d.status === "Live"} />
                   </TableCell>
                   <TableCell className="text-xs text-stone-400">{d.expires}</TableCell>
-                  <TableCell className="text-right pr-6">
-                    <div className="flex items-center justify-end gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
-                      <Button
-                        variant={d.status === "Live" ? "outline" : "green"}
-                        size="sm"
+                  <TableCell className="text-right pr-6 w-[170px]">
+                    <div className="flex items-center justify-end gap-[6px]">
+                      <ActionButton
+                        variant={d.status === "Live" ? "danger" : "primary"}
                         onClick={() => toggleStatus(d.id)}
                       >
                         {d.status === "Live" ? "Pause" : "Activate"}
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
+                      </ActionButton>
+                      <ActionButton
+                        variant="secondary"
                         onClick={() => {
                           setEditing(d);
                           setShowAdd(true);
                         }}
                       >
                         Edit
-                      </Button>
+                      </ActionButton>
                     </div>
                   </TableCell>
                 </TableRow>
@@ -1370,7 +1365,7 @@ export function Merch() {
               <TableHead>Stock Level</TableHead>
               <TableHead>Total Sold</TableHead>
               <TableHead>Inventory Status</TableHead>
-              <TableHead className="text-right pr-6">Action</TableHead>
+              <TableHead className="text-right pr-6 w-[130px]">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -1430,11 +1425,11 @@ export function Merch() {
                   <TableCell>
                     <StatusBadge status={p.status} dot={p.status === "Active"} />
                   </TableCell>
-                  <TableCell className="text-right pr-6">
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-150 flex justify-end">
-                      <Button variant="outline" size="sm" onClick={() => setShowAdd(true)}>
+                  <TableCell className="text-right pr-6 w-[130px]">
+                    <div className="flex items-center justify-end">
+                      <ActionButton variant="secondary" onClick={() => setShowAdd(true)}>
                         Edit Product
-                      </Button>
+                      </ActionButton>
                     </div>
                   </TableCell>
                 </TableRow>
@@ -1609,7 +1604,7 @@ export function Orders() {
               <TableHead>Total Paid</TableHead>
               <TableHead>Fulfillment</TableHead>
               <TableHead>Date</TableHead>
-              <TableHead className="text-right pr-6">Action</TableHead>
+              <TableHead className="text-right pr-6 w-[120px]">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -1656,26 +1651,39 @@ export function Orders() {
                     <StatusBadge status={o.status} dot={o.status === "Processing"} />
                   </TableCell>
                   <TableCell className="text-xs text-stone-400">{o.date}</TableCell>
-                  <TableCell className="text-right pr-6">
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-150 flex items-center justify-end gap-1.5">
+                  <TableCell className="text-right pr-6 w-[120px]">
+                    <div className="flex items-center justify-end">
                       {o.status === "Processing" && (
-                        <Button variant="green" size="sm" onClick={() => shipOrder(o.id)}>
+                        <ActionButton
+                          variant="primary"
+                          onClick={() => shipOrder(o.id)}
+                        >
                           <Truck className="w-3 h-3 mr-1" /> Ship
-                        </Button>
+                        </ActionButton>
                       )}
                       {o.status === "Shipped" && (
-                        <Button
-                          variant="outline"
-                          size="sm"
+                        <ActionButton
+                          variant="secondary"
                           onClick={() => toast("Tracking opened", "info")}
                         >
                           Track
-                        </Button>
+                        </ActionButton>
                       )}
                       {o.status === "Delivered" && (
-                        <Badge variant="outline" className="text-stone-400">
-                          Completed
-                        </Badge>
+                        <ActionButton
+                          variant="secondary"
+                          onClick={() => toast(`Order #${o.id} details`, "info")}
+                        >
+                          Complete
+                        </ActionButton>
+                      )}
+                      {o.status !== "Processing" && o.status !== "Shipped" && o.status !== "Delivered" && (
+                        <ActionButton
+                          variant="secondary"
+                          onClick={() => toast(`Order #${o.id} details`, "info")}
+                        >
+                          Details
+                        </ActionButton>
                       )}
                     </div>
                   </TableCell>
@@ -1807,7 +1815,7 @@ export function Perks() {
                 <TableHead>Date</TableHead>
                 <TableHead>RSVPs</TableHead>
                 <TableHead>Status</TableHead>
-                <TableHead className="text-right pr-6">Action</TableHead>
+                <TableHead className="text-right pr-6 w-[160px]">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -1848,15 +1856,20 @@ export function Perks() {
                     <TableCell>
                       <StatusBadge status={e.status} dot={e.status === "Live"} />
                     </TableCell>
-                    <TableCell className="text-right pr-6">
-                      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-150 flex items-center justify-end gap-1.5">
-                        <Button
-                          variant="outline"
-                          size="sm"
+                    <TableCell className="text-right pr-6 w-[160px]">
+                      <div className="flex items-center justify-end gap-[6px]">
+                        <ActionButton
+                          variant="secondary"
                           onClick={() => toast(`Editing ${e.name}`, "info")}
                         >
                           Edit
-                        </Button>
+                        </ActionButton>
+                        <ActionButton
+                          variant="danger"
+                          onClick={() => toast(`Cancelled ${e.name}`, "error")}
+                        >
+                          Cancel
+                        </ActionButton>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -2334,7 +2347,7 @@ export function MapLocations() {
                   <TableHead>Location</TableHead>
                   <TableHead>Attached Deal</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead className="text-right pr-6">Action</TableHead>
+                  <TableHead className="text-right pr-6 w-[120px]">Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -2374,15 +2387,14 @@ export function MapLocations() {
                       <TableCell>
                         <StatusBadge status={d.status} dot={d.status === "Live"} />
                       </TableCell>
-                      <TableCell className="text-right pr-6">
-                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-150 flex items-center justify-end">
-                          <Button
-                            variant="outline"
-                            size="sm"
+                      <TableCell className="text-right pr-6 w-[120px]">
+                        <div className="flex items-center justify-end">
+                          <ActionButton
+                            variant="secondary"
                             onClick={() => toast(`${d.name} pin recalibrated`, "info")}
                           >
                             Pin Info
-                          </Button>
+                          </ActionButton>
                         </div>
                       </TableCell>
                     </TableRow>

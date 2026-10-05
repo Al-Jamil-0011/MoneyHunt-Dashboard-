@@ -45,7 +45,7 @@ import {
   MRR_GROWTH_HISTORY,
   Subscriber,
 } from "@/lib/data";
-import { useToast, Modal, StatusBadge, EmptyState, FloatingBulkBar } from "../ui";
+import { useToast, Modal, StatusBadge, EmptyState, FloatingBulkBar, ActionButton } from "../ui";
 
 // User Avatar Component
 function SubAvatar({
@@ -756,7 +756,7 @@ export function Subscriptions({
                 <th className="py-3 px-4">Next Renewal</th>
                 <th className="py-3 px-4">Total LTV</th>
                 <th className="py-3 px-4">Status</th>
-                <th className="py-3 px-4 text-right">Actions</th>
+                <th className="py-3 px-4 text-right w-[110px]">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-stone-100 text-stone-700">
@@ -860,17 +860,14 @@ export function Subscriptions({
                       </td>
 
                       {/* Action */}
-                      <td className="py-3 px-4 text-right">
-                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-150 inline-block">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setSelectedSub(sub);
-                            }}
-                            className="bg-white hover:bg-stone-100 text-stone-700 border border-stone-200 text-xs font-bold px-3 py-1 rounded-lg transition-colors shadow-2xs cursor-pointer"
+                      <td className="py-3 px-4 text-right w-[110px]" onClick={(e) => e.stopPropagation()}>
+                        <div className="flex items-center justify-end">
+                          <ActionButton
+                            variant="secondary"
+                            onClick={() => setSelectedSub(sub)}
                           >
                             Manage
-                          </button>
+                          </ActionButton>
                         </div>
                       </td>
                     </tr>

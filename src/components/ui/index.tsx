@@ -56,6 +56,39 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = "Button";
 
 // ─────────────────────────────────────────────────────────────
+// STANDARDIZED TABLE ACTION BUTTONS (Always Visible)
+// ─────────────────────────────────────────────────────────────
+export interface ActionButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: "primary" | "secondary" | "danger";
+}
+
+export const ActionButton = React.forwardRef<HTMLButtonElement, ActionButtonProps>(
+  ({ variant = "secondary", className, children, ...props }, ref) => {
+    const base =
+      "inline-flex items-center justify-center text-xs font-semibold px-3 py-1.5 rounded-[6px] transition-all cursor-pointer whitespace-nowrap select-none shadow-2xs";
+    const variants = {
+      primary:
+        "bg-[#22C55E] hover:bg-[#16A34A] text-white border border-transparent active:scale-[0.98]",
+      secondary:
+        "bg-white border border-[#E5E7EB] hover:border-[#22C55E] text-[#374151] hover:text-[#22C55E] active:scale-[0.98]",
+      danger:
+        "bg-white border border-[#FCA5A5] hover:bg-[#FEF2F2] text-[#EF4444] active:scale-[0.98]",
+    };
+    return (
+      <button
+        ref={ref}
+        className={cn(base, variants[variant], className)}
+        {...props}
+      >
+        {children}
+      </button>
+    );
+  }
+);
+ActionButton.displayName = "ActionButton";
+
+// ─────────────────────────────────────────────────────────────
 // BADGE (shadcn/ui Badge)
 // ─────────────────────────────────────────────────────────────
 // BADGE (shadcn/ui Badge) — Standardized with Rule 2
