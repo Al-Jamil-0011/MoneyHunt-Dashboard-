@@ -249,9 +249,32 @@ export const DEALS: Deal[] = [
 ];
 
 export type Product = {
-  id: string; name: string; category: string; price: number;
-  memberDiscount: number; stock: number; orders: number;
-  status: "Active" | "Low Stock" | "Hidden"; icon: string; sku: string;
+  id: string;
+  name: string;
+  category: string;
+  price: number;
+  originalPrice?: number;
+  memberDiscount: number;
+  stock: number;
+  orders: number;
+  status: "Active" | "Low Stock" | "Hidden" | "Draft";
+  icon: string;
+  sku: string;
+  brand?: string;
+  description?: string;
+  image?: string;
+  colors?: string[];
+  sizes?: string[];
+  lowStockAlert?: number;
+  badges?: {
+    isNew?: boolean;
+    isLimited?: boolean;
+    showMemberDiscount?: boolean;
+    featuredNewArrivals?: boolean;
+    recommendedForYou?: boolean;
+    featuredBanner?: boolean;
+  };
+  visibility?: "Published" | "Members Only" | "Draft";
 };
 
 export const PRODUCTS: Product[] = [

@@ -40,9 +40,11 @@ import {
   ActionButton,
   useToast,
 } from "../ui";
+import { ProductModal } from "../merch/ProductModal";
 import {
   HUNTS,
   DEALS,
+  Product,
   PRODUCTS,
   ORDERS,
   EVENTS,
@@ -1226,12 +1228,102 @@ export function Merch() {
   const { toast } = useToast();
   const [products, setProducts] = useState(PRODUCTS);
   const [selectedMerchIds, setSelectedMerchIds] = useState<string[]>([]);
-  const [showAdd, setShowAdd] = useState(false);
+  const [showProductModal, setShowProductModal] = useState(false);
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [catFilter, setCatFilter] = useState("All");
 
   const filtered = products.filter(
     (p) => catFilter === "All" || p.category === catFilter
   );
+
+  const handleOpenAdd = () => {
+    setEditingProduct(null);
+    setShowProductModal(true);
+  };
+
+  const handleOpenEdit = (p: Product) => {
+    setEditingProduct(p);
+    setShowProductModal(true);
+  };
+
+  const handleSaveProduct = (savedProduct: Product, isDraft?: boolean) => {
+    if (editingProduct) {
+      setProducts((prev) =>
+        prev.map((p) => (p.id === savedProduct.id ? savedProduct : p))
+      );
+      toast(
+        {
+          title: isDraft ? "Saved as Draft" : "Product Updated!",
+          sub: `${savedProduct.name} has been updated in the catalog`,
+        },
+        "success",
+        4000
+      );
+    } else {
+      setProducts((prev) => [savedProduct, ...prev]);
+      if (isDraft) {
+        toast(
+          {
+            title: "Saved as Draft",
+            sub: `${savedProduct.name} saved as draft (hidden from app)`,
+          },
+          "info",
+          4000
+        );
+      } else {
+        toast(
+          {
+            title: "Published to App!",
+            sub: `${savedProduct.name} is now live in the MoneyHunt Merch section`,
+          },
+          "success",
+          4000
+        );
+      }
+    }
+  };
+
+  const handleUnpublishProduct = (productId: string) => {
+    setProducts((prev) =>
+      prev.map((p) =>
+        p.id === productId ? { ...p, status: "Hidden" as const } : p
+      )
+    );
+    const prod = products.find((p) => p.id === productId);
+    toast(
+      {
+        title: "Product Hidden",
+        sub: `${prod?.name || "Product"} is now hidden from the app`,
+      },
+      "info",
+      4000
+    );
+  };
+
+  const handleToggleHide = (productId: string) => {
+    setProducts((prev) =>
+      prev.map((p) => {
+        if (p.id === productId) {
+          const nextStatus =
+            p.status === "Hidden" ? ("Active" as const) : ("Hidden" as const);
+          return { ...p, status: nextStatus };
+        }
+        return p;
+      })
+    );
+    const prod = products.find((p) => p.id === productId);
+    const willHide = prod?.status !== "Hidden";
+    toast(
+      {
+        title: willHide ? "Product Hidden" : "Product Visible",
+        sub: `${prod?.name || "Product"} is now ${
+          willHide ? "hidden from" : "visible in"
+        } the app`,
+      },
+      willHide ? "info" : "success",
+      3500
+    );
+  };
 
   return (
     <div className="animate-fade space-y-6">
@@ -1258,7 +1350,7 @@ export function Merch() {
             Exclusive hunter gear, member discounts, stock levels, and fulfillment.
           </p>
         </div>
-        <Button variant="green" size="sm" onClick={() => setShowAdd(true)}>
+        <Button variant="green" size="sm" onClick={handleOpenAdd}>
           <Plus className="w-3.5 h-3.5 mr-1.5" />
           Add Product
         </Button>
@@ -1274,7 +1366,7 @@ export function Merch() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-black text-stone-900">
-              {products.filter((p) => p.status !== "Hidden").length}
+              {products.filter((p) => p.status !== "Hidden" && p.status !== "Draft").length}
             </div>
             <div className="text-[11px] text-stone-400 mt-1">Live in store</div>
           </CardContent>
@@ -1367,7 +1459,7 @@ export function Merch() {
               <TableHead>Stock Level</TableHead>
               <TableHead>Total Sold</TableHead>
               <TableHead>Inventory Status</TableHead>
-              <TableHead className="text-right pr-6 w-[130px]">Action</TableHead>
+              <TableHead className="text-right pr-6 w-[170px]">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -1427,11 +1519,21 @@ export function Merch() {
                   <TableCell>
                     <StatusBadge status={p.status} dot={p.status === "Active"} />
                   </TableCell>
-                  <TableCell className="text-right pr-6 w-[130px]">
-                    <div className="flex items-center justify-end">
-                      <ActionButton variant="secondary" onClick={() => setShowAdd(true)}>
+                  <TableCell className="text-right pr-6 w-[170px]">
+                    <div className="flex items-center justify-end gap-1.5">
+                      <ActionButton
+                        variant="secondary"
+                        onClick={() => handleOpenEdit(p)}
+                      >
                         Edit Product
                       </ActionButton>
+                      <button
+                        type="button"
+                        onClick={() => handleToggleHide(p.id)}
+                        className="px-2.5 py-1 text-xs font-semibold rounded-md border border-stone-200 text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition-colors"
+                      >
+                        {p.status === "Hidden" ? "Show" : "Hide"}
+                      </button>
                     </div>
                   </TableCell>
                 </TableRow>
@@ -1481,6 +1583,18 @@ export function Merch() {
             </Button>
           </>
         }
+      />
+
+      {/* Add / Edit Product Modal with Live Mobile Preview */}
+      <ProductModal
+        isOpen={showProductModal}
+        onClose={() => {
+          setShowProductModal(false);
+          setEditingProduct(null);
+        }}
+        productToEdit={editingProduct}
+        onSave={handleSaveProduct}
+        onUnpublish={handleUnpublishProduct}
       />
     </div>
   );

@@ -892,24 +892,37 @@ export function Modal({
 // ─────────────────────────────────────────────────────────────
 // TOAST (shadcn/ui Toast System)
 // ─────────────────────────────────────────────────────────────
-type Toast = { id: number; msg: string; type: "success" | "error" | "info" };
-type ToastCtx = { toast: (msg: string, type?: Toast["type"]) => void };
+export type ToastMsg = string | { title: string; sub?: string };
+export type ToastItem = {
+  id: number;
+  title: string;
+  sub?: string;
+  type: "success" | "error" | "info";
+};
+export type ToastCtx = {
+  toast: (msg: ToastMsg, type?: ToastItem["type"], duration?: number) => void;
+};
 const ToastContext = React.createContext<ToastCtx>({ toast: () => {} });
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
-  const [toasts, setToasts] = React.useState<Toast[]>([]);
-  const toast = React.useCallback((msg: string, type: Toast["type"] = "success") => {
-    const id = Date.now();
-    setToasts((p) => [...p, { id, msg, type }]);
-    setTimeout(() => setToasts((p) => p.filter((t) => t.id !== id)), 3000);
-  }, []);
+  const [toasts, setToasts] = React.useState<ToastItem[]>([]);
+  const toast = React.useCallback(
+    (msg: ToastMsg, type: ToastItem["type"] = "success", duration = 3500) => {
+      const id = Date.now() + Math.random();
+      const title = typeof msg === "string" ? msg : msg.title;
+      const sub = typeof msg === "string" ? undefined : msg.sub;
+      setToasts((p) => [...p, { id, title, sub, type }]);
+      setTimeout(() => setToasts((p) => p.filter((t) => t.id !== id)), duration);
+    },
+    []
+  );
 
-  const bg: Record<Toast["type"], string> = {
-    success: "bg-[#16A34A] text-white border-green-700 shadow-md",
-    error: "bg-red-500 text-white border-red-700 shadow-md",
-    info: "bg-stone-900 text-white border-stone-800 shadow-md",
+  const bg: Record<ToastItem["type"], string> = {
+    success: "bg-[#16A34A] text-white border-green-700 shadow-xl",
+    error: "bg-red-500 text-white border-red-700 shadow-xl",
+    info: "bg-stone-900 text-white border-stone-800 shadow-xl",
   };
-  const icon: Record<Toast["type"], string> = { success: "✓", error: "✕", info: "ℹ" };
+  const icon: Record<ToastItem["type"], string> = { success: "✓", error: "✕", info: "ℹ" };
 
   return (
     <ToastContext.Provider value={{ toast }}>
@@ -919,14 +932,21 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
           <div
             key={t.id}
             className={cn(
-              "px-4 py-3 rounded-xl text-xs font-bold flex items-center gap-2.5 animate-slide pointer-events-auto min-w-[240px] border",
+              "px-4 py-3 rounded-xl text-xs flex items-start gap-3 animate-slide pointer-events-auto min-w-[280px] max-w-sm border shadow-xl transition-all",
               bg[t.type]
             )}
           >
-            <span className="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center text-[10px]">
+            <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-[11px] shrink-0 font-bold mt-0.5">
               {icon[t.type]}
             </span>
-            <span>{t.msg}</span>
+            <div className="flex-1">
+              <div className="font-bold text-xs leading-snug">{t.title}</div>
+              {t.sub && (
+                <div className="text-[11px] text-white/90 font-normal mt-0.5 leading-snug">
+                  {t.sub}
+                </div>
+              )}
+            </div>
           </div>
         ))}
       </div>
