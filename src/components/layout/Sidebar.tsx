@@ -15,8 +15,6 @@ import {
   DollarSign,
   Ticket,
   Bell,
-  BarChart3,
-  Settings as SettingsIcon,
   LogOut,
   Shield,
   X,
@@ -78,13 +76,6 @@ const NAV_SECTIONS: { section: string; items: NavItem[] }[] = [
       { id: "sweepstakes", label: "Sweepstakes", icon: Ticket },
     ],
   },
-  {
-    section: "INSIGHTS",
-    items: [
-      { id: "analytics", label: "Analytics", icon: BarChart3 },
-      { id: "settings", label: "Settings", icon: SettingsIcon },
-    ],
-  },
 ];
 
 export function Sidebar({
@@ -135,7 +126,7 @@ export function Sidebar({
             >
               {/* Vibrant Green Shield Logo */}
               <div className="relative group flex-shrink-0">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-b from-[#22C55E] to-[#16A34A] flex items-center justify-center text-white shadow-[0_4px_16px_rgba(34,197,94,0.35)] ring-1 ring-white/20 transition-transform group-hover:scale-105 duration-200">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-b from-[#22C55E] to-[#16A34A] flex items-center justify-center text-white shadow-[0_4px_18px_rgba(34,197,94,0.45)] ring-1 ring-white/20 transition-transform group-hover:scale-105 duration-200">
                   <div className="relative flex items-center justify-center">
                     <Shield className="w-5 h-5 fill-white stroke-none" />
                     <span className="absolute text-[#16A34A] font-black text-[10px] leading-none">
@@ -147,10 +138,10 @@ export function Sidebar({
 
               {!collapsed && (
                 <div className="min-w-0 flex-1 animate-fade">
-                  <div className="text-[15px] font-bold text-white tracking-tight leading-tight">
+                  <div className="text-[15.5px] font-bold text-white tracking-tight leading-tight">
                     Money Hunt
                   </div>
-                  <div className="text-[10px] font-semibold text-[#71717A] tracking-[0.09em] uppercase mt-0.5">
+                  <div className="text-[10px] font-semibold text-[#71717A] tracking-[0.1em] uppercase mt-0.5">
                     ADMIN CONSOLE
                   </div>
                 </div>
@@ -176,7 +167,7 @@ export function Sidebar({
           {NAV_SECTIONS.map(({ section, items }) => (
             <div key={section} className="mb-2.5">
               {!collapsed ? (
-                <div className="text-[10.5px] font-bold text-[#71717A] tracking-[0.07em] uppercase px-3 pt-3 pb-1.5 animate-fade">
+                <div className="text-[10.5px] font-bold text-[#71717A] tracking-[0.08em] uppercase px-3 pt-3 pb-1.5 animate-fade">
                   {section}
                 </div>
               ) : (
@@ -198,13 +189,13 @@ export function Sidebar({
                         collapsed ? "justify-center px-0 py-2.5" : "gap-3 px-3 py-2"
                       } ${
                         isActive
-                          ? "bg-[#153420] text-white font-semibold"
+                          ? "bg-[#153420] text-white font-semibold shadow-xs"
                           : "text-[#E4E4E7] hover:text-white hover:bg-white/[0.06]"
                       }`}
                     >
                       {/* Left Green Active Bar (Signature from reference design) */}
                       {isActive && (
-                        <span className="absolute -left-2.5 top-1/2 -translate-y-1/2 w-[3.5px] h-5 rounded-r-full bg-[#22C55E] shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
+                        <span className="absolute -left-2.5 top-1/2 -translate-y-1/2 w-[3.5px] h-5 rounded-r-full bg-[#22C55E] shadow-[0_0_10px_rgba(34,197,94,0.8)]" />
                       )}
 
                       <span className="flex-shrink-0 transition-colors">
