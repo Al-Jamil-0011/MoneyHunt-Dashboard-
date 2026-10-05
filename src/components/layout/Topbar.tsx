@@ -1,22 +1,44 @@
 "use client";
 import React from "react";
-import { Search, Bell, HelpCircle, ChevronDown, Download, Plus } from "lucide-react";
+import { Search, Bell, HelpCircle, ChevronDown, Download, Plus, Menu } from "lucide-react";
 import { Button } from "../ui";
 
-export function Topbar({ page, onNewHunt }: { page: string; onNewHunt: () => void }) {
+export function Topbar({
+  page,
+  onNewHunt,
+  onToggleMobileSidebar,
+}: {
+  page: string;
+  onNewHunt: () => void;
+  onToggleMobileSidebar?: () => void;
+}) {
   return (
-    <header className="bg-[#F8F7F2] border-b border-[#EAE8E1] px-7 h-16 flex items-center justify-between flex-shrink-0 z-20">
-      {/* Search Input Box */}
-      <div className="relative flex items-center">
-        <div className="flex items-center gap-2.5 bg-white border border-[#E6E4DC] hover:border-[#D5D2C7] focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/15 rounded-xl px-3.5 py-2 shadow-[0_1px_2px_rgba(0,0,0,0.03)] transition-all w-80">
-          <Search className="w-4 h-4 text-stone-400 flex-shrink-0" />
-          <input
-            placeholder="Search users, hunts, deals, orders..."
-            className="text-[13px] bg-transparent border-none outline-none w-full text-stone-800 placeholder:text-stone-400 font-normal"
-          />
-          <kbd className="text-[10px] text-stone-400 bg-stone-50 border border-stone-200/80 rounded px-1.5 py-0.5 font-mono flex-shrink-0">
-            ⌘K
-          </kbd>
+    <header className="bg-[#F8F7F2] border-b border-[#EAE8E1] px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between flex-shrink-0 z-20">
+      {/* Left: Hamburger menu toggle (mobile/tablet) + Search */}
+      <div className="flex items-center gap-2 sm:gap-3">
+        {onToggleMobileSidebar && (
+          <button
+            onClick={onToggleMobileSidebar}
+            className="lg:hidden p-2 -ml-1 text-stone-600 hover:text-stone-900 hover:bg-stone-200/50 rounded-xl transition-colors"
+            title="Open Menu"
+            aria-label="Toggle navigation menu"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+        )}
+
+        {/* Search Input Box */}
+        <div className="relative flex items-center">
+          <div className="flex items-center gap-2 sm:gap-2.5 bg-white border border-[#E6E4DC] hover:border-[#D5D2C7] focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/15 rounded-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 shadow-[0_1px_2px_rgba(0,0,0,0.03)] transition-all w-36 xs:w-48 sm:w-60 md:w-72 lg:w-80">
+            <Search className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-stone-400 flex-shrink-0" />
+            <input
+              placeholder="Search..."
+              className="text-xs sm:text-[13px] bg-transparent border-none outline-none w-full text-stone-800 placeholder:text-stone-400 font-normal"
+            />
+            <kbd className="hidden sm:inline-block text-[10px] text-stone-400 bg-stone-50 border border-stone-200/80 rounded px-1.5 py-0.5 font-mono flex-shrink-0">
+              ⌘K
+            </kbd>
+          </div>
         </div>
       </div>
 
@@ -49,7 +71,7 @@ export function Topbar({ page, onNewHunt }: { page: string; onNewHunt: () => voi
             />
             <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-full ring-1 ring-white" />
           </div>
-          <div className="text-left">
+          <div className="hidden sm:block text-left">
             <div className="text-[12px] font-bold text-stone-900 leading-tight">
               Aisha Rahman
             </div>
@@ -62,15 +84,15 @@ export function Topbar({ page, onNewHunt }: { page: string; onNewHunt: () => voi
 
         {/* Page specific action buttons */}
         {page === "winners" && (
-          <Button variant="outline" size="sm" onClick={() => {}} className="ml-1">
+          <Button variant="outline" size="sm" onClick={() => {}} className="hidden xs:inline-flex ml-1">
             <Download className="w-3.5 h-3.5 mr-1" />
-            Export
+            <span className="hidden sm:inline">Export</span>
           </Button>
         )}
         {page === "hunts" && (
           <Button variant="green" size="sm" onClick={onNewHunt} className="ml-1">
             <Plus className="w-3.5 h-3.5 mr-1" />
-            New Drop
+            <span>New Drop</span>
           </Button>
         )}
       </div>

@@ -212,7 +212,7 @@ export function Users() {
             />
           </div>
 
-          <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
+          <div className="flex items-center gap-3 w-full md:w-auto justify-start md:justify-end overflow-x-auto pb-1 md:pb-0">
             <Tabs
               value={planFilter}
               onValueChange={(val) => setPlanFilter(val as any)}
@@ -230,14 +230,14 @@ export function Users() {
 
       {/* Table Card */}
       <Card className="overflow-hidden">
-        <CardHeader className="py-4 px-5 border-b border-stone-100 flex-row items-center justify-between space-y-0 bg-stone-50/40">
+        <CardHeader className="py-4 px-4 sm:px-5 border-b border-stone-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 space-y-0 bg-stone-50/40">
           <div>
             <CardTitle className="text-sm">Members & Verification Status</CardTitle>
             <CardDescription>
               Showing {filtered.length} member profiles based on current filter.
             </CardDescription>
           </div>
-          <Badge variant="outline" className="font-mono text-stone-500">
+          <Badge variant="outline" className="font-mono text-stone-500 self-start sm:self-auto">
             Live Records
           </Badge>
         </CardHeader>

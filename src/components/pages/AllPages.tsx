@@ -657,7 +657,7 @@ export function HuntManagement() {
         title="🎯 Schedule New Cash Drop"
         wide
         footer={
-          <div className="flex justify-end gap-2 w-full">
+          <div className="flex flex-wrap justify-end gap-2 w-full">
             <Button variant="outline" onClick={() => setShowCreate(false)}>
               Cancel
             </Button>
@@ -699,8 +699,8 @@ export function HuntManagement() {
           </div>
         }
       >
-        <div className="grid grid-cols-2 gap-4">
-          <div className="col-span-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="col-span-1 sm:col-span-2">
             <label className="text-xs font-bold text-stone-700 block mb-1.5">
               Drop Location / Venue
             </label>
@@ -712,7 +712,7 @@ export function HuntManagement() {
           </div>
 
           {/* ADDITION 2 — Map preview in Create modal (200px height) */}
-          <div className="col-span-2 space-y-1.5">
+          <div className="col-span-1 sm:col-span-2 space-y-1.5">
             <div className="flex items-center justify-between">
               <label className="text-xs font-bold text-stone-700 flex items-center gap-1.5">
                 <MapPin className="w-3.5 h-3.5 text-emerald-600" />
@@ -852,7 +852,7 @@ export function HuntManagement() {
             />
           </div>
 
-          <div className="col-span-2">
+          <div className="col-span-1 sm:col-span-2">
             <label className="text-xs font-bold text-stone-700 block mb-1.5">
               Free Clue (Borough Level)
             </label>
@@ -1002,14 +1002,14 @@ export function Deals() {
       </div>
 
       <Card className="overflow-hidden">
-        <CardHeader className="py-4 px-5 border-b border-stone-100 flex-row items-center justify-between space-y-0 bg-stone-50/40">
+        <CardHeader className="py-4 px-4 sm:px-5 border-b border-stone-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 space-y-0 bg-stone-50/40">
           <div>
             <CardTitle className="text-sm">Partner Businesses</CardTitle>
             <CardDescription>
               All merchant offers linked with hunt drop checkpoints.
             </CardDescription>
           </div>
-          <Badge variant="outline" className="font-mono text-stone-500">
+          <Badge variant="outline" className="font-mono text-stone-500 self-start sm:self-auto">
             {deals.length} Vendors
           </Badge>
         </CardHeader>
@@ -1325,21 +1325,23 @@ export function Merch() {
       </div>
 
       <Card className="overflow-hidden">
-        <CardHeader className="py-4 px-5 border-b border-stone-100 flex-row items-center justify-between space-y-0 bg-stone-50/40">
+        <CardHeader className="py-4 px-4 sm:px-5 border-b border-stone-100 flex flex-col md:flex-row md:items-center justify-between gap-3 space-y-0 bg-stone-50/40">
           <div>
             <CardTitle className="text-sm">Gear Catalog</CardTitle>
             <CardDescription>
               Inventory quantities, SKU mappings, and subscriber pricing.
             </CardDescription>
           </div>
-          <Tabs value={catFilter} onValueChange={setCatFilter}>
-            <TabsList>
-              <TabsTrigger value="All">All</TabsTrigger>
-              <TabsTrigger value="Apparel">Apparel</TabsTrigger>
-              <TabsTrigger value="Accessories">Accessories</TabsTrigger>
-              <TabsTrigger value="Limited Edition">Limited Edition</TabsTrigger>
-            </TabsList>
-          </Tabs>
+          <div className="overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
+            <Tabs value={catFilter} onValueChange={setCatFilter}>
+              <TabsList>
+                <TabsTrigger value="All">All</TabsTrigger>
+                <TabsTrigger value="Apparel">Apparel</TabsTrigger>
+                <TabsTrigger value="Accessories">Accessories</TabsTrigger>
+                <TabsTrigger value="Limited Edition">Limited Edition</TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
         </CardHeader>
 
         <Table>
@@ -1572,7 +1574,7 @@ export function Orders() {
       </div>
 
       <Card className="overflow-hidden">
-        <CardHeader className="py-4 px-5 border-b border-stone-100 flex-row items-center justify-between space-y-0 bg-stone-50/40">
+        <CardHeader className="py-4 px-4 sm:px-5 border-b border-stone-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 space-y-0 bg-stone-50/40">
           <div>
             <CardTitle className="text-sm">Recent Order Shipments</CardTitle>
             <CardDescription>
@@ -1790,9 +1792,9 @@ export function Perks() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Events Table */}
         <Card className="overflow-hidden">
-          <CardHeader className="py-4 px-5 border-b border-stone-100 flex-row items-center justify-between space-y-0 bg-stone-50/40">
+          <CardHeader className="py-4 px-4 sm:px-5 border-b border-stone-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 space-y-0 bg-stone-50/40">
             <CardTitle className="text-sm">Community Events</CardTitle>
-            <Badge variant="outline">{events.length} Active</Badge>
+            <Badge variant="outline" className="self-start sm:self-auto">{events.length} Active</Badge>
           </CardHeader>
           <Table>
             <TableHeader>

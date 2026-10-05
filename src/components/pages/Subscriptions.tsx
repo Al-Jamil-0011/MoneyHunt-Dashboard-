@@ -685,7 +685,7 @@ export function Subscriptions({
 
           <div className="flex flex-wrap items-center gap-2.5">
             {/* Search Input */}
-            <div className="flex items-center gap-2 bg-stone-50 border border-stone-200/80 rounded-xl px-3 py-1.5 w-64 focus-within:bg-white focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/10 transition-all">
+            <div className="flex items-center gap-2 bg-stone-50 border border-stone-200/80 rounded-xl px-3 py-1.5 w-full sm:w-64 focus-within:bg-white focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/10 transition-all">
               <Search className="w-3.5 h-3.5 text-stone-400 flex-shrink-0" />
               <input
                 value={search}
@@ -732,8 +732,8 @@ export function Subscriptions({
         </div>
 
         {/* Subscribers Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
+        <div className="overflow-x-auto custom-scrollbar">
+          <table className="w-full text-left text-xs min-w-[850px]">
             <thead>
               <tr className="bg-stone-50/70 border-b border-stone-100 text-stone-400 font-bold uppercase tracking-wider text-[10px]">
                 <th className="py-3 px-3 w-10">

@@ -43,17 +43,29 @@ function PageContent({ page, onNav }: { page: Page; onNav: (p: string) => void }
 
 export default function AdminApp() {
   const [page, setPage] = useState<Page>("dashboard");
-  const [showHuntModal, setShowHuntModal] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navigate = (p: string) => setPage(p as Page);
+  const navigate = (p: string) => {
+    setPage(p as Page);
+    setMobileMenuOpen(false);
+  };
 
   return (
     <ToastProvider>
       <div className="flex h-screen overflow-hidden bg-[#F8F7F2]">
-        <Sidebar active={page} onNav={navigate} />
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <Topbar page={page} onNewHunt={() => navigate("hunts")} />
-          <main className="flex-1 overflow-y-auto px-8 py-6 custom-scrollbar">
+        <Sidebar
+          active={page}
+          onNav={navigate}
+          mobileOpen={mobileMenuOpen}
+          onCloseMobile={() => setMobileMenuOpen(false)}
+        />
+        <div className="flex-1 flex flex-col overflow-hidden min-w-0">
+          <Topbar
+            page={page}
+            onNewHunt={() => navigate("hunts")}
+            onToggleMobileSidebar={() => setMobileMenuOpen((prev) => !prev)}
+          />
+          <main className="flex-1 overflow-y-auto px-3.5 sm:px-6 lg:px-8 py-4 sm:py-6 custom-scrollbar">
             <PageContent page={page} onNav={navigate} />
           </main>
         </div>

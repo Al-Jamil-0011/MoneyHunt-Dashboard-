@@ -309,14 +309,14 @@ export function Winners() {
 
       {/* Winners Data Table */}
       <Card className="overflow-hidden">
-        <CardHeader className="py-4 px-5 border-b border-stone-100 flex-row items-center justify-between space-y-0 bg-stone-50/40">
+        <CardHeader className="py-4 px-4 sm:px-5 border-b border-stone-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 space-y-0 bg-stone-50/40">
           <div>
             <CardTitle className="text-sm">Prize Claims & Verification Roster</CardTitle>
             <CardDescription>
               Showing {filtered.length} claims filtered by "{filter}".
             </CardDescription>
           </div>
-          <Badge variant="outline" className="font-mono text-stone-500">
+          <Badge variant="outline" className="font-mono text-stone-500 self-start sm:self-auto">
             Encrypted Audit Log
           </Badge>
         </CardHeader>
@@ -508,9 +508,9 @@ export function Winners() {
         />
       )}
 
-      {/* Right Side Panel (320px wide) */}
+      {/* Right Side Panel (Responsive: full width on mobile, 340px on tablet/desktop) */}
       <aside
-        className={`fixed top-0 right-0 bottom-0 w-[320px] bg-white border-l border-[#EAE8E1] shadow-2xl z-50 flex flex-col justify-between p-5 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 bottom-0 w-full sm:w-[340px] max-w-full bg-white border-l border-[#EAE8E1] shadow-2xl z-50 flex flex-col justify-between p-4 sm:p-5 transform transition-transform duration-300 ease-in-out ${
           selected ? "translate-x-0" : "translate-x-full"
         }`}
       >

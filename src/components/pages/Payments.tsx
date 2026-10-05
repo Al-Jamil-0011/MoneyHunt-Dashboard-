@@ -274,8 +274,8 @@ export function Payments() {
         </div>
 
         {/* Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
+        <div className="overflow-x-auto custom-scrollbar">
+          <table className="w-full text-left text-xs min-w-[800px]">
             <thead>
               <tr className="border-b border-stone-100 bg-[#FBF9F4]/40 text-stone-400 font-bold text-[10px] tracking-wider uppercase">
                 <th className="py-3 px-3 w-10">

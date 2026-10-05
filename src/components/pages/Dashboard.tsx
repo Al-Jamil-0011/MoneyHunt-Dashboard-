@@ -290,9 +290,9 @@ export function Dashboard({ onNav }: { onNav: (id: string) => void }) {
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2.5">
           {/* Timeframe Filter Tabs */}
-          <div className="flex items-center bg-[#EFECE4] p-1 rounded-xl border border-stone-200/80">
+          <div className="flex items-center bg-[#EFECE4] p-1 rounded-xl border border-stone-200/80 overflow-x-auto">
             <button
               onClick={() => setTimeRange("30d")}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${timeRange === "30d"

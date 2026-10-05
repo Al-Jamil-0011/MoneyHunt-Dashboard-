@@ -17,6 +17,7 @@ import {
   Bell,
   LogOut,
   Shield,
+  X,
 } from "lucide-react";
 
 type NavItem = {
@@ -77,67 +78,109 @@ const NAV_SECTIONS: { section: string; items: NavItem[] }[] = [
   },
 ];
 
-export function Sidebar({ active, onNav }: { active: string; onNav: (id: string) => void }) {
+export function Sidebar({
+  active,
+  onNav,
+  mobileOpen = false,
+  onCloseMobile,
+}: {
+  active: string;
+  onNav: (id: string) => void;
+  mobileOpen?: boolean;
+  onCloseMobile?: () => void;
+}) {
   const [collapsed, setCollapsed] = React.useState(false);
 
   return (
-    <aside
-      className={`flex-shrink-0 bg-[#0B0E14] h-screen flex flex-col border-r border-[#1C232E] select-none z-30 transition-all duration-200 ${
-        collapsed ? "w-[60px]" : "w-[210px]"
-      }`}
-    >
-      {/* Brand Header */}
-      <div
-        className={`border-b border-[#1C232E]/80 flex-shrink-0 transition-all duration-200 ${
-          collapsed ? "px-2.5 py-4 flex justify-center" : "px-4 py-4"
+    <>
+      {/* Mobile Backdrop Overlay */}
+      {mobileOpen && (
+        <div
+          onClick={onCloseMobile}
+          className="fixed inset-0 bg-black/60 backdrop-blur-xs z-40 lg:hidden animate-fade"
+          aria-hidden="true"
+        />
+      )}
+
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 lg:static flex-shrink-0 bg-[#0B0E14] h-screen flex flex-col border-r border-[#1C232E] select-none transition-transform duration-300 ease-in-out ${
+          mobileOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full lg:translate-x-0"
+        } ${
+          collapsed ? "lg:w-[60px]" : "w-[240px] lg:w-[210px]"
         }`}
       >
-        <div className="flex items-center gap-2.5">
-          <div
-            className="relative group cursor-pointer flex-shrink-0"
-            title="Money Hunt · Admin Console"
-            onClick={() => onNav("dashboard")}
-          >
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white shadow-[0_0_14px_rgba(16,185,129,0.35)] ring-1 ring-emerald-300/30 transition-transform group-hover:scale-105 duration-200">
-              <Shield className="w-4 h-4 fill-white/20 stroke-white" strokeWidth={2.2} />
-            </div>
-            <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-400 rounded-full ring-2 ring-[#0B0E14]" />
-          </div>
-          {!collapsed && (
-            <div className="min-w-0 flex-1 animate-fade">
-              <div className="flex items-center justify-between">
-                <span className="text-[13px] font-extrabold text-white tracking-tight leading-tight">
-                  Money Hunt
-                </span>
+        {/* Brand Header */}
+        <div
+          className={`border-b border-[#1C232E]/80 flex-shrink-0 transition-all duration-200 ${
+            collapsed ? "px-2.5 py-4 flex justify-center" : "px-4 py-4"
+          }`}
+        >
+          <div className="flex items-center justify-between gap-2.5">
+            <div
+              className="flex items-center gap-2.5 cursor-pointer min-w-0 flex-1"
+              title="Money Hunt · Admin Console"
+              onClick={() => {
+                onNav("dashboard");
+                onCloseMobile?.();
+              }}
+            >
+              <div className="relative group flex-shrink-0">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white shadow-[0_0_14px_rgba(16,185,129,0.35)] ring-1 ring-emerald-300/30 transition-transform group-hover:scale-105 duration-200">
+                  <Shield className="w-4 h-4 fill-white/20 stroke-white" strokeWidth={2.2} />
+                </div>
+                <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-400 rounded-full ring-2 ring-[#0B0E14]" />
               </div>
-              <div className="text-[8.5px] font-bold text-emerald-400/90 tracking-[0.16em] uppercase mt-0.5 flex items-center gap-1">
-                <span>ADMIN CONSOLE</span>
-              </div>
+              {!collapsed && (
+                <div className="min-w-0 flex-1 animate-fade">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[13px] font-extrabold text-white tracking-tight leading-tight">
+                      Money Hunt
+                    </span>
+                  </div>
+                  <div className="text-[8.5px] font-bold text-emerald-400/90 tracking-[0.16em] uppercase mt-0.5 flex items-center gap-1">
+                    <span>ADMIN CONSOLE</span>
+                  </div>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      </div>
 
-      {/* Navigation List */}
-      <nav className="flex-1 py-3 px-2 overflow-y-auto space-y-2.5 custom-scrollbar overflow-x-hidden">
-        {NAV_SECTIONS.map(({ section, items }) => (
-          <div key={section}>
-            {!collapsed ? (
-              <div className="text-[9px] font-bold text-slate-500 tracking-[0.14em] uppercase px-2 mb-1 animate-fade">
-                {section}
-              </div>
-            ) : (
-              <div className="h-px bg-[#1C232E]/70 my-1.5 mx-1" />
+            {/* Mobile Close Button (shown on mobile drawer) */}
+            {onCloseMobile && (
+              <button
+                onClick={onCloseMobile}
+                className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors flex-shrink-0"
+                title="Close Navigation"
+                aria-label="Close navigation"
+              >
+                <X className="w-4 h-4" />
+              </button>
             )}
-            <div className="space-y-0.5">
-              {items.map((item) => {
-                const isActive = active === item.id;
-                const Icon = item.icon;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => onNav(item.id)}
-                    title={collapsed ? item.label : undefined}
+          </div>
+        </div>
+
+        {/* Navigation List */}
+        <nav className="flex-1 py-3 px-2 overflow-y-auto space-y-2.5 custom-scrollbar overflow-x-hidden">
+          {NAV_SECTIONS.map(({ section, items }) => (
+            <div key={section}>
+              {!collapsed ? (
+                <div className="text-[9px] font-bold text-slate-500 tracking-[0.14em] uppercase px-2 mb-1 animate-fade">
+                  {section}
+                </div>
+              ) : (
+                <div className="h-px bg-[#1C232E]/70 my-1.5 mx-1" />
+              )}
+              <div className="space-y-0.5">
+                {items.map((item) => {
+                  const isActive = active === item.id;
+                  const Icon = item.icon;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => {
+                        onNav(item.id);
+                        onCloseMobile?.();
+                      }}
+                      title={collapsed ? item.label : undefined}
                     className={`w-full group flex items-center rounded-xl text-[12px] font-medium transition-all duration-150 relative text-left cursor-pointer ${
                       collapsed ? "justify-center px-0 py-2.5" : "gap-2.5 px-2.5 py-1.5"
                     } ${
@@ -234,5 +277,6 @@ export function Sidebar({ active, onNav }: { active: string; onNav: (id: string)
         </div>
       </div>
     </aside>
+    </>
   );
 }

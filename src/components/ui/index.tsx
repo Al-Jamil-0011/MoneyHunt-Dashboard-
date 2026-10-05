@@ -320,7 +320,7 @@ export function FloatingBulkBar({
 }) {
   if (selectedCount <= 0) return null;
   return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-white border border-[#EAE8E1] rounded-[12px] shadow-[0_10px_35px_rgba(0,0,0,0.14)] px-5 py-3 flex items-center gap-4 animate-in slide-in-from-bottom-4 duration-200">
+    <div className="fixed bottom-3 sm:bottom-6 left-3 right-3 sm:left-1/2 sm:right-auto sm:-translate-x-1/2 z-50 bg-white border border-[#EAE8E1] rounded-[14px] shadow-[0_10px_35px_rgba(0,0,0,0.14)] px-3.5 sm:px-5 py-2.5 sm:py-3 flex flex-wrap sm:flex-nowrap items-center justify-between sm:justify-start gap-2.5 sm:gap-4 max-w-full sm:max-w-xl animate-in slide-in-from-bottom-4 duration-200">
       <div className="text-xs font-bold text-stone-800 flex items-center gap-2">
         <span className="w-2 h-2 rounded-full bg-[#22C55E]" />
         <span>
@@ -465,10 +465,10 @@ export const Table = React.forwardRef<
   HTMLTableElement,
   React.HTMLAttributes<HTMLTableElement>
 >(({ className, ...props }, ref) => (
-  <div className="relative w-full overflow-auto">
+  <div className="relative w-full overflow-x-auto custom-scrollbar">
     <table
       ref={ref}
-      className={cn("w-full caption-bottom text-xs text-stone-700", className)}
+      className={cn("w-full caption-bottom text-xs text-stone-700 min-w-[720px]", className)}
       {...props}
     />
   </div>
@@ -869,7 +869,7 @@ export function Modal({
           "max-w-[95vw] max-h-[90vh]"
         )}
       >
-        <div className="flex items-center justify-between px-6 py-4 border-b border-stone-100">
+        <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 sm:py-4 border-b border-stone-100">
           <h3 className="text-sm font-bold text-stone-900">{title}</h3>
           <button
             onClick={onClose}
@@ -878,9 +878,9 @@ export function Modal({
             ✕
           </button>
         </div>
-        <div className="px-6 py-5 overflow-y-auto flex-1">{children}</div>
+        <div className="px-4 sm:px-6 py-4 sm:py-5 overflow-y-auto flex-1">{children}</div>
         {footer && (
-          <div className="px-6 py-3.5 border-t border-stone-100 flex justify-end gap-2 bg-stone-50/50">
+          <div className="px-4 sm:px-6 py-3 sm:py-3.5 border-t border-stone-100 flex flex-wrap justify-end gap-2 bg-stone-50/50">
             {footer}
           </div>
         )}

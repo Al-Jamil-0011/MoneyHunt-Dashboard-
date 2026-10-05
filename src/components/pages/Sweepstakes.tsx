@@ -194,7 +194,7 @@ export function Sweepstakes() {
         </div>
 
         {/* Top-Right Buttons */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2.5">
           <button
             onClick={() => setShowEntryLogModal(true)}
             className="flex items-center gap-1.5 bg-white hover:bg-stone-50 border border-[#E6E4DC] hover:border-stone-300 text-stone-700 text-xs font-bold px-3.5 py-2 rounded-xl shadow-2xs transition-all"
@@ -332,7 +332,7 @@ export function Sweepstakes() {
             </div>
 
             {/* 3 Mini Stat Boxes (Dark Glass) */}
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
               <div className="bg-white/[0.06] border border-white/10 rounded-xl p-3.5 backdrop-blur-xs">
                 <div className="text-lg font-black text-white tracking-tight">
                   12,440
@@ -519,8 +519,8 @@ export function Sweepstakes() {
             </p>
 
             {/* Table (4 rows) */}
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
+            <div className="overflow-x-auto custom-scrollbar">
+              <table className="w-full text-left text-xs min-w-[420px]">
                 <thead>
                   <tr className="bg-stone-50/70 border-b border-stone-100 text-stone-400 font-bold uppercase tracking-wider text-[10px]">
                     <th className="py-2.5 px-3">PACKAGE</th>
@@ -874,8 +874,8 @@ export function Sweepstakes() {
         </div>
 
         {/* 5 Data Rows Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
+        <div className="overflow-x-auto custom-scrollbar">
+          <table className="w-full text-left text-xs min-w-[850px]">
             <thead>
               <tr className="bg-stone-50/70 border-b border-stone-100 text-stone-400 font-bold uppercase tracking-wider text-[10px]">
                 <th className="py-3 px-3 w-10">
