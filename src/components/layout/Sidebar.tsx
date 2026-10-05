@@ -137,7 +137,7 @@ export function Sidebar({
                 alt="Money Hunt Mascot"
                 className={`transition-all duration-200 drop-shadow-[0_6px_20px_rgba(34,197,94,0.3)] group-hover:scale-105 ${collapsed
                   ? "w-11 h-11 object-contain"
-                  : "w-[124px] h-[105px] object-contain"
+                  : "w-[124px] h-[80px] object-contain"
                   }`}
               />
             </div>
